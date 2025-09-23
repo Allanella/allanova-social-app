@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "description": "Express.js backend API server",
   "type": "module",
-  "main": "server/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server/index.js",
+    "dev": "nodemon index.js",
     "build": "echo 'No build step required for backend'",
-    "start": "node server/index.js"
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "Allan",
