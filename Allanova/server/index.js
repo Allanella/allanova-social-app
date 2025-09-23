@@ -1,29 +1,37 @@
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 dotenv.config();
-import express from "express"
+import express from "express";
 import { connectToDataBase } from "./database/connectionToDataBase.js";
-import authRoutes from './routes/myAuthRoutes.js'
+import authRoutes from './routes/myAuthRoutes.js';
 
-
-
-
+// Connect to database
 connectToDataBase();
 
 const app = express();
 
-app.get("/", (req, res) =>{
-res.send("I love you Lord!!!")
-})
+// Middleware for parsing JSON
+app.use(express.json());
 
-//Connection to database
+// Root route
+app.get("/", (req, res) => {
+    res.json({ 
+        message: "I love you Lord!!!", 
+        status: "Server is running successfully" 
+    });
+});
 
-//middle ware 
-app.use('/api/auth', authRoutes)
+// API routes
+app.use('/api/auth', authRoutes);
 
-app.listen(3000, () => {
-    console.log("Server running on port 3000")
-})
-console.log("Running file:", process.argv[1]);
-//8prgtlKk9LWYNRd3
+// Use environment variable for port, fallback to 3000 for local development
+const PORT = process.env.PORT || 3000;
 
-// mongodb+srv://allanella:8prgtlKk9LWYNRd3@cluster0.12dyl8l.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+// Only start server if not in Vercel environment
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}
+
+// Export the app for Vercel
+export default app;

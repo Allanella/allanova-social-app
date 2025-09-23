@@ -1,12 +1,14 @@
 {
-  "name": "server",
+  "name": "backend-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Express.js backend API server",
   "type": "module",
   "main": "server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-   "dev": "nodemon server/index.js"
+    "dev": "nodemon server/index.js",
+    "build": "echo 'No build step required for backend'",
+    "start": "node server/index.js"
   },
   "keywords": [],
   "author": "Allan",
@@ -14,7 +16,9 @@
   "dependencies": {
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
-    "mongoose": "^8.18.1",
+    "mongoose": "^8.18.1"
+  },
+  "devDependencies": {
     "nodemon": "^3.1.10"
   }
 }
