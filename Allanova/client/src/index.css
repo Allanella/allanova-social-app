@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+/* Keep your custom styles below the Tailwind import */
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  /* ... rest of your styles */
+}
