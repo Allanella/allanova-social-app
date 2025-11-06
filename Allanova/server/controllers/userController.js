@@ -1,4 +1,4 @@
-import User from "../models/UserModel.js";  // use default export from your model
+import User from '../models/UserModel.js'; // use default export from your model
 
 // @desc    Get user profile
 // @route   GET /api/users/:id
@@ -6,14 +6,14 @@ import User from "../models/UserModel.js";  // use default export from your mode
 export const getUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
-      .select("-password")
-      .populate("followers", "username fullName profilePicture")
-      .populate("following", "username fullName profilePicture");
+      .select('-password')
+      .populate('followers', 'username fullName profilePicture')
+      .populate('following', 'username fullName profilePicture');
 
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: "User not found",
+        message: 'User not found',
       });
     }
 
@@ -37,28 +37,35 @@ export const updateProfile = async (req, res) => {
     if (req.user.id !== req.params.id) {
       return res.status(403).json({
         success: false,
-        message: "Not authorized to update this profile",
+        message: 'Not authorized to update this profile',
       });
     }
 
     const allowedUpdates = [
-      "fullName", "bio", "title", "skills", "experience",
-      "location", "githubUsername", "portfolio", "openToWork",
-      "hiring", "profilePicture"
+      'fullName',
+      'bio',
+      'title',
+      'skills',
+      'experience',
+      'location',
+      'githubUsername',
+      'portfolio',
+      'openToWork',
+      'hiring',
+      'profilePicture',
     ];
 
     const updates = {};
-    Object.keys(req.body).forEach(key => {
+    Object.keys(req.body).forEach((key) => {
       if (allowedUpdates.includes(key)) {
         updates[key] = req.body[key];
       }
     });
 
-    const user = await User.findByIdAndUpdate(
-      req.params.id,
-      updates,
-      { new: true, runValidators: true }
-    );
+    const user = await User.findByIdAndUpdate(req.params.id, updates, {
+      new: true,
+      runValidators: true,
+    });
 
     res.status(200).json({
       success: true,
@@ -83,21 +90,21 @@ export const followUser = async (req, res) => {
     if (!userToFollow) {
       return res.status(404).json({
         success: false,
-        message: "User not found",
+        message: 'User not found',
       });
     }
 
     if (req.params.id === req.user.id) {
       return res.status(400).json({
         success: false,
-        message: "You cannot follow yourself",
+        message: 'You cannot follow yourself',
       });
     }
 
     if (currentUser.following.includes(req.params.id)) {
       return res.status(400).json({
         success: false,
-        message: "Already following this user",
+        message: 'Already following this user',
       });
     }
 
@@ -109,7 +116,7 @@ export const followUser = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "User followed successfully",
+      message: 'User followed successfully',
     });
   } catch (error) {
     res.status(500).json({
@@ -130,22 +137,20 @@ export const unfollowUser = async (req, res) => {
     if (!userToUnfollow) {
       return res.status(404).json({
         success: false,
-        message: "User not found",
+        message: 'User not found',
       });
     }
 
     if (!currentUser.following.includes(req.params.id)) {
       return res.status(400).json({
         success: false,
-        message: "Not following this user",
+        message: 'Not following this user',
       });
     }
 
-    currentUser.following = currentUser.following.filter(
-      id => id.toString() !== req.params.id
-    );
+    currentUser.following = currentUser.following.filter((id) => id.toString() !== req.params.id);
     userToUnfollow.followers = userToUnfollow.followers.filter(
-      id => id.toString() !== req.user.id
+      (id) => id.toString() !== req.user.id
     );
 
     await currentUser.save();
@@ -153,7 +158,7 @@ export const unfollowUser = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "User unfollowed successfully",
+      message: 'User unfollowed successfully',
     });
   } catch (error) {
     res.status(500).json({

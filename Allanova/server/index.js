@@ -1,7 +1,7 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 dotenv.config();
-import express from "express";
-import { connectToDataBase } from "./database/connectionToDataBase.js";
+import express from 'express';
+import { connectToDataBase } from './database/connectionToDataBase.js';
 import authRoutes from './routes/myAuthRoutes.js';
 
 // Connect to database
@@ -13,11 +13,11 @@ const app = express();
 app.use(express.json());
 
 // Root route
-app.get("/", (req, res) => {
-    res.json({ 
-        message: "I love you Lord!!!", 
-        status: "Server is running successfully" 
-    });
+app.get('/', (req, res) => {
+  res.json({
+    message: 'I love you Lord!!!',
+    status: 'Server is running successfully',
+  });
 });
 
 // API routes
@@ -28,9 +28,9 @@ const PORT = process.env.PORT || 3000;
 
 // Only start server if not in Vercel environment
 if (process.env.NODE_ENV !== 'production') {
-    app.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}`);
-    });
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
 }
 
 // Export the app for Vercel
