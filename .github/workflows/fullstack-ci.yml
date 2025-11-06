@@ -60,5 +60,5 @@ jobs:
       # Optional Backend Build
       # ---------------------------
       - name: Build Backend (if needed)
-        working-directory: ./backend
+        working-directory: ./server
         run: npm run build || echo "No backend build"
