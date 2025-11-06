@@ -11,11 +11,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repo
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -25,36 +23,36 @@ jobs:
       # Backend CI (server folder)
       # ---------------------------
       - name: Install Backend Dependencies
-        working-directory: ./server  
+        working-directory: server  # ✅ Remove ./
         run: npm install
 
       - name: Lint Backend
-        working-directory: ./server  
+        working-directory: server  # ✅ Remove ./
         run: npx prettier --check .
 
       - name: Run Backend Tests
-        working-directory: ./server  
+        working-directory: server  # ✅ Remove ./
         run: npm test || echo "No backend tests yet"
 
       - name: Build Backend (if needed)
-        working-directory: ./server  
+        working-directory: server  # ✅ Remove ./
         run: npm run build || echo "No backend build"
 
       # ---------------------------
       # Frontend CI (client folder)
       # ---------------------------
       - name: Install Frontend Dependencies
-        working-directory: ./client  
+        working-directory: client  # ✅ Remove ./
         run: npm install
 
       - name: Lint Frontend
-        working-directory: ./client  
+        working-directory: client  # ✅ Remove ./
         run: npx prettier --check .
 
       - name: Run Frontend Tests
-        working-directory: ./client  
+        working-directory: client  # ✅ Remove ./
         run: npm test || echo "No frontend tests yet"
 
       - name: Build Frontend
-        working-directory: ./client  # ✅ Only one line
+        working-directory: client  # ✅ Remove ./
         run: npm run build || echo "No frontend build"
