@@ -23,36 +23,44 @@ jobs:
       # Backend CI (server folder)
       # ---------------------------
       - name: Install Backend Dependencies
-        working-directory: server  # ✅ Remove ./
-        run: npm install
+        run: |
+          cd server
+          npm install
 
       - name: Lint Backend
-        working-directory: server  # ✅ Remove ./
-        run: npx prettier --check .
+        run: |
+          cd server
+          npx prettier --check .
 
       - name: Run Backend Tests
-        working-directory: server  # ✅ Remove ./
-        run: npm test || echo "No backend tests yet"
+        run: |
+          cd server
+          npm test || echo "No backend tests yet"
 
       - name: Build Backend (if needed)
-        working-directory: server  # ✅ Remove ./
-        run: npm run build || echo "No backend build"
+        run: |
+          cd server
+          npm run build || echo "No backend build"
 
       # ---------------------------
       # Frontend CI (client folder)
       # ---------------------------
       - name: Install Frontend Dependencies
-        working-directory: client  # ✅ Remove ./
-        run: npm install
+        run: |
+          cd client
+          npm install
 
       - name: Lint Frontend
-        working-directory: client  # ✅ Remove ./
-        run: npx prettier --check .
+        run: |
+          cd client
+          npx prettier --check .
 
       - name: Run Frontend Tests
-        working-directory: client  # ✅ Remove ./
-        run: npm test || echo "No frontend tests yet"
+        run: |
+          cd client
+          npm test || echo "No frontend tests yet"
 
       - name: Build Frontend
-        working-directory: client  # ✅ Remove ./
-        run: npm run build || echo "No frontend build"
+        run: |
+          cd client
+          npm run build || echo "No frontend build"
