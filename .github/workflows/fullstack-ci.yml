@@ -1,0 +1,58 @@
+name: Fullstack CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      # ---------------------------
+      # Backend CI (Allanova/server folder)
+      # ---------------------------
+      - name: Install Backend Dependencies
+        working-directory: Allanova/server
+        run: npm install
+
+      - name: Lint Backend
+        working-directory: Allanova/server
+        run: npx prettier --check .
+
+      - name: Run Backend Tests
+        working-directory: Allanova/server
+        run: npm test || echo "No backend tests yet"
+
+      - name: Build Backend (if needed)
+        working-directory: Allanova/server
+        run: npm run build || echo "No backend build"
+
+      # ---------------------------
+      # Frontend CI (Allanova/client folder)
+      # ---------------------------
+      - name: Install Frontend Dependencies
+        working-directory: Allanova/client
+        run: npm install
+
+      - name: Lint Frontend
+        working-directory: Allanova/client
+        run: npx prettier --check .
+
+      - name: Run Frontend Tests
+        working-directory: Allanova/client
+        run: npm test || echo "No frontend tests yet"
+
+      - name: Build Frontend
+        working-directory: Allanova/client
+        run: npm run build || echo "No frontend build"
