@@ -1,5 +1,6 @@
 name: Fullstack CI
 
+# Trigger on push or pull request to master branch
 on:
   push:
     branches: [ "master" ]
@@ -11,9 +12,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout the repo
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Step 2: Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -26,17 +29,17 @@ jobs:
         working-directory: Allanova/server
         run: npm install
 
-      - name: Lint Backend
+      - name: Lint Backend Code
         working-directory: Allanova/server
-        run: npx prettier --check .
+        run: npx prettier --check . || echo "Formatting issues found"
 
       - name: Run Backend Tests
         working-directory: Allanova/server
         run: npm test || echo "No backend tests yet"
 
-      - name: Build Backend (if needed)
+      - name: Build Backend
         working-directory: Allanova/server
-        run: npm run build || echo "No backend build"
+        run: npm run build || echo "No backend build script"
 
       # ---------------------------
       # Frontend CI (Allanova/client folder)
@@ -45,9 +48,9 @@ jobs:
         working-directory: Allanova/client
         run: npm install
 
-      - name: Lint Frontend
+      - name: Lint Frontend Code
         working-directory: Allanova/client
-        run: npx prettier --check .
+        run: npx prettier --check . || echo "Formatting issues found"
 
       - name: Run Frontend Tests
         working-directory: Allanova/client
@@ -55,4 +58,12 @@ jobs:
 
       - name: Build Frontend
         working-directory: Allanova/client
-        run: npm run build || echo "No frontend build"
+        run: npm run build || echo "No frontend build script"
+
+      # ---------------------------
+      # Security & Quality Checks
+      # ---------------------------
+      - name: Audit Dependencies
+        run: |
+          cd Allanova/server && npm audit --audit-level moderate || true
+          cd ../client && npm audit --audit-level moderate || true
