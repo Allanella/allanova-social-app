@@ -1,19 +1,15 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv";
-
-// Only load .env file in development, not in production
-if (process.env.NODE_ENV !== 'production') {
-  dotenv.config();
-}
 
 const connectToDataBase = async () => {
   try {
-    const mongoUri = process.env.MONGODB_URI;
     
-    console.log("MongoDB URI:", mongoUri ? "Present" : "Missing"); // Debug log
+    const mongoUri = process.env.MONGO_URI;
+    
+    console.log("MONGO_URI present:", mongoUri ? "Yes" : "No");
+    console.log("All environment variables:", Object.keys(process.env));
     
     if (!mongoUri) {
-      throw new Error("MONGODB_URI environment variable is not defined");
+      throw new Error("MONGO_URI environment variable is not defined");
     }
 
     await mongoose.connect(mongoUri);

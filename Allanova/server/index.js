@@ -1,8 +1,13 @@
-import dotenv from 'dotenv';
-dotenv.config();
 import express from 'express';
 import { connectToDataBase } from './database/connectionToDataBase.js';
 import authRoutes from './routes/myAuthRoutes.js';
+
+
+
+console.log('=== ENVIRONMENT CHECK ===');
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('MONGO_URI present:', process.env.MONGO_URI ? 'Yes' : 'No');
+console.log('PORT:', process.env.PORT);
 
 // Connect to database
 connectToDataBase();
@@ -23,15 +28,11 @@ app.get('/', (req, res) => {
 // API routes
 app.use('/api/auth', authRoutes);
 
-// Use environment variable for port, fallback to 3000 for local development
+// Use environment variable for port
 const PORT = process.env.PORT || 3000;
 
-// Only start server if not in Vercel environment
-if (process.env.NODE_ENV !== 'production') {
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
-}
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
-// Export the app for Vercel
 export default app;
