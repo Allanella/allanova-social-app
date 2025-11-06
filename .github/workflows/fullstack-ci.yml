@@ -14,53 +14,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      # ---------------------------
-      # Backend CI (server folder)
-      # ---------------------------
-      - name: Install Backend Dependencies
+      - name: Comprehensive Debug
         run: |
-          cd server
-          npm install
-
-      - name: Lint Backend
-        run: |
-          cd server
-          npx prettier --check .
-
-      - name: Run Backend Tests
-        run: |
-          cd server
-          npm test || echo "No backend tests yet"
-
-      - name: Build Backend (if needed)
-        run: |
-          cd server
-          npm run build || echo "No backend build"
-
-      # ---------------------------
-      # Frontend CI (client folder)
-      # ---------------------------
-      - name: Install Frontend Dependencies
-        run: |
-          cd client
-          npm install
-
-      - name: Lint Frontend
-        run: |
-          cd client
-          npx prettier --check .
-
-      - name: Run Frontend Tests
-        run: |
-          cd client
-          npm test || echo "No frontend tests yet"
-
-      - name: Build Frontend
-        run: |
-          cd client
-          npm run build || echo "No frontend build"
+          echo "=== COMPREHENSIVE DIRECTORY DEBUG ==="
+          echo "Current directory: $(pwd)"
+          echo "--- Full directory structure ---"
+          ls -la
+          echo "--- Looking for server/client folders ---"
+          find . -type d -name "server" -o -name "client" -o -name "Server" -o -name "Client" | head -20
+          echo "--- Checking exact folder names ---"
+          [ -d "server" ] && echo "✅ 'server' folder exists" || echo "❌ 'server' folder NOT found"
+          [ -d "client" ] && echo "✅ 'client' folder exists" || echo "❌ 'client' folder NOT found"
+          [ -d "./server" ] && echo "✅ './server' folder exists" || echo "❌ './server' folder NOT found"
+          [ -d "./client" ] && echo "✅ './client' folder exists" || echo "❌ './client' folder NOT found"
+          echo "--- GitHub Workspace ---"
+          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
