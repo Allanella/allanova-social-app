@@ -26,34 +26,34 @@ jobs:
       # Backend CI
       # ---------------------------
       - name: Install Backend Dependencies
-        working-directory: ./backend
+        working-directory: ./server
         run: npm install
 
       - name: Lint Backend
-        working-directory: ./backend
+        working-directory: ./server
         run: npx prettier --check .
 
       - name: Run Backend Tests
-        working-directory: ./backend
+        working-directory: ./server
         run: npm test || echo "No backend tests yet"
 
       # ---------------------------
       # Frontend CI
       # ---------------------------
       - name: Install Frontend Dependencies
-        working-directory: ./frontend
+        working-directory: ./client
         run: npm install
 
       - name: Lint Frontend
-        working-directory: ./frontend
+        working-directory: ./client
         run: npx prettier --check .
 
       - name: Run Frontend Tests
-        working-directory: ./frontend
+        working-directory: ./client
         run: npm test || echo "No frontend tests yet"
 
       - name: Build Frontend
-        working-directory: ./frontend
+        working-directory: ./client
         run: npm run build || echo "No frontend build"
 
       # ---------------------------
