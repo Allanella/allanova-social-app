@@ -1,6 +1,5 @@
 name: Fullstack CI
 
-# Trigger on push or pull request to master branch
 on:
   push:
     branches: [ "master" ]
@@ -57,5 +56,5 @@ jobs:
         run: npm test || echo "No frontend tests yet"
 
       - name: Build Frontend
-        working-directory: ./client  # ✅ Add ./
+        working-directory: ./client  # ✅ Only one line
         run: npm run build || echo "No frontend build"
