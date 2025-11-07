@@ -1,12 +1,12 @@
+import 'dotenv/config'; // Load environment variables FIRST
 import express from 'express';
 import { connectToDataBase } from './database/connectionToDataBase.js';
 import authRoutes from './routes/myAuthRoutes.js';
 
-
-
 console.log('=== ENVIRONMENT CHECK ===');
 console.log('NODE_ENV:', process.env.NODE_ENV);
 console.log('MONGO_URI present:', process.env.MONGO_URI ? 'Yes' : 'No');
+console.log('MONGODB_URI present:', process.env.MONGODB_URI ? 'Yes' : 'No');
 console.log('PORT:', process.env.PORT);
 
 // Connect to database
